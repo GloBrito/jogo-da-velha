@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jogo da Velha</title>
+    <style lang="text/css">
+      .caixa {
+        padding: 28px;
+        border: 1px solid rebeccapurple;
+        display: inline-block;
+      }
+    </style>
+    <script>
+      let jogador = "x";
+      let acabou = false;
+
+      const matrix = [
+        ["a", "b", "c"],
+        ["d", "e", "f"],
+        ["g", "h", "i"],
+      ];
+
+      const caixas = document.getElementsByClassName("caixa");
+      console.log(caixas);
+
+      function jogar(linha, coluna) {
+        if (acabou) {
+          alert("sai pra la, ja acabou");
+          return;
+        }
+
+        const el = caixas[coluna + linha * 3];
+        el.innerHTML = jogador;
+
+        matrix[linha][coluna] = jogador;
+        console.log(matrix);
+
+        for (let i = 0; i < 3; i++) {
+          let tudo_igual = matrix[i].every((v) => v == matrix[i][0]);
+          if (tudo_igual) {
+            console.log(`${matrix[i][0]} ganhou`);
+            acabou = true;
+            return;
+          }
+        }
+
+        for (let i = 0; i < 3; i++) {
+          const coluna = [matrix[0][i], matrix[1][i], matrix[2][i]];
+          let tudo_igual = coluna.every((v) => v == coluna[0]);
+          if (tudo_igual) {
+            console.log(`${matrix[0][i]} ganhou`);
+            acabou = true;
+            return;
+          }
+        }
+
+        if (jogador === "x") {
+          jogador = "o";
+        } else {
+          jogador = "x";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="horizontal">
+        <div onclick="jogar(0, 0)" class="caixa">_</div>
+        <div onclick="jogar(0, 1)" class="caixa">_</div>
+        <div onclick="jogar(0, 2)" class="caixa">_</div>
+      </div>
+      <div class="horizontal">
+        <div onclick="jogar(1, 0)" class="caixa">_</div>
+        <div onclick="jogar(1, 1)" class="caixa">_</div>
+        <div onclick="jogar(1, 2)" class="caixa">_</div>
+      </div>
+      <div class="horizontal">
+        <div onclick="jogar(2, 0)" class="caixa">_</div>
+        <div onclick="jogar(2, 1)" class="caixa">_</div>
+        <div onclick="jogar(2, 2)" class="caixa">_</div>
+      </div>
+    </div>
+  </body>
+</html>
